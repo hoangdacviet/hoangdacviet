@@ -12,7 +12,7 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
-# Hi, I'm  Hoang Dac Viet 👋 ![](https://komarev.com/ghpvc/?username=hoangdacviet&label=Profile+Views)
+# Hi, I'm  Hoang Dac Viet 👋  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=500+cigarettes+🤤)](https://komeverse.com) 
 
 **Entrepreneur · Industrial Automation · Software & Digital Products**
 
