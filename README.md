@@ -23,7 +23,7 @@ My goal is to turn ideas into useful products, build sustainable businesses, and
 [![Github stats](https://github-readme-stats.vercel.app/api?username=hoangdacviet&hide=issues&show_icons=true)](https://github.com/hoangdacviet)
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=hoangdacviet&layout=compact)](https://github.com/hoangdacviet)
 
-## 🚀 What I'm Building
+## 🚀 What I'm Building  ![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)
 
 ### 🏭 [Kami Machine](https://kamimachine.com)
 Industrial machinery and automation solutions made in Vietnam.
