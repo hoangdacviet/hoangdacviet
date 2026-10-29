@@ -12,7 +12,7 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
-# Hi, I'm  Hoang Dac Viet 👋  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=500+cigarettes+🤤)](https://komeverse.com) 
+# Hi, I'm  Hoang Dac Viet 👋  ![](https://komarev.com/ghpvc/?username=hoangdacviet&label=Profile+Views)
 
 **Entrepreneur · Industrial Automation · Software & Digital Products**
 
@@ -23,7 +23,7 @@ My goal is to turn ideas into useful products, build sustainable businesses, and
 [![Github stats](https://github-readme-stats.vercel.app/api?username=hoangdacviet&hide=issues&show_icons=true)](https://github.com/hoangdacviet)
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=hoangdacviet&layout=compact)](https://github.com/hoangdacviet)
 
-## 🚀 What I'm Building  ![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)
+## 🚀 What I'm Building  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)](https://komeverse.com) 
 
 ### 🏭 [Kami Machine](https://kamimachine.com)
 Industrial machinery and automation solutions made in Vietnam.
