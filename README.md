@@ -20,12 +20,14 @@ I build practical technology products — from industrial machinery and automati
 
 My goal is to turn ideas into useful products, build sustainable businesses, and create technology that delivers real value.
 
-## 📊 GitHub Stats
+## 📊 GitHub Stats :fire:
 
 ![GitHub Stats](https://github-profile-summary-cards.vercel.app/api/cards/stats?username=hoangdacviet&theme=nord_dark)
 ![Most Commit Language](https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=hoangdacviet&theme=nord_dark)
 
 ![Profile Details](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=hoangdacviet)
+
+[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=hoangdacviet&theme=dark&background=000000)](https://git.io/streak-stats)
 
 ## 🚀 What I'm Building  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)](https://komeverse.com) 
 
