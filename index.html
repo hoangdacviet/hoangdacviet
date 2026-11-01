@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>hoangdacviet Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Geneva&display=swap');
+
+        :root {
+            --mac-bg: #558888;
+            --mac-window-bg: #ffffff;
+            --mac-border-dark: #000000;
+            --mac-border-light: #ffffff;
+            --mac-gray-light: #e0e0e0;
+            --mac-gray-mid: #aaaaaa;
+        }
+
+        /* Checkerboard Classic System 7 Teal Desktop Background */
+        body {
+            font-family: 'Geneva', 'Monaco', 'Courier New', monospace, sans-serif;
+            background-color: #558888;
+            background-image: radial-gradient(#000000 15%, transparent 16%), radial-gradient(#ffffff 15%, transparent 16%);
+            background-size: 4px 4px;
+            background-position: 0 0, 2px 2px;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Pin Stripes for Active Titlebar */
+        .mac-stripes {
+            background: repeating-linear-gradient(
+                to bottom,
+                #000000,
+                #000000 1px,
+                #ffffff 1px,
+                #ffffff 2px
+            );
+        }
+
+        /* Inactive Window Titlebar Stripes */
+        .mac-stripes-inactive {
+            background: repeating-linear-gradient(
+                to bottom,
+                #888888,
+                #888888 1px,
+                #ffffff 1px,
+                #ffffff 2px
+            );
+        }
+
+        /* Classic Double Border for Mac Windows */
+        .mac-window-border {
+            border: 1px solid #000000;
+            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Standard Retro Button Style */
+        .mac-btn {
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            box-shadow: inset -1px -1px 0px #888888, inset 1px 1px 0px #ffffff, 1px 1px 0px #000000;
+            padding: 3px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
+
+        .mac-btn:active {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: inset 1px 1px 0px #888888;
+        }
+
+        .mac-btn-default {
+            border: 2px solid #000000;
+            outline: 1px solid #000000;
+            outline-offset: 1px;
+        }
+
+        /* Custom Retro Scrollbar */
+        ::-webkit-scrollbar {
+            width: 16px;
+            height: 16px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-left: 1px solid #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fff;
+            border: 1px solid #000;
+            box-shadow: inset -1px -1px 0 #888;
+        }
+        ::-webkit-scrollbar-button {
+            background: #fff;
+            border: 1px solid #000;
+            height: 16px;
+            width: 16px;
+        }
+
+        /* Desktop Icon Selection State */
+        .desktop-icon.selected .icon-label {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .desktop-icon.selected .icon-img {
+            filter: invert(100%);
+        }
+
+        /* Top Menu Bar Dropdown */
+        .menu-item-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            border: 1px solid #000000;
+            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+            min-width: 180px;
+            z-index: 9999;
+        }
+
+        .menu-item:hover .menu-item-dropdown,
+        .menu-item.active .menu-item-dropdown {
+            display: block;
+        }
+
+        .dropdown-row {
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #000000;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .dropdown-row:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #000000;
+            margin: 2px 0;
+        }
+
+        /* Terminal styling */
+        .terminal-body {
+            background-color: #000000;
+            color: #00ff00;
+            font-family: 'VT323', 'Courier New', monospace;
+        }
+
+        /* Classic Mac OS Grow Box / Resize Handle */
+        .mac-resize-handle {
+            position: absolute;
+            right: 2px;
+            bottom: 2px;
+            width: 14px;
+            height: 14px;
+            cursor: se-resize;
+            background-image: repeating-linear-gradient(
+                -45deg,
+                #000,
+                #000 1px,
+                #fff 1px,
+                #fff 3px
+            );
+            border: 1px solid #000;
+            z-index: 40;
+        }
+    
+        /* MOBILE: only About Me may open full-screen */
+        @media (max-width: 640px) {
+            .mac-window {
+                max-width: calc(100vw - 12px) !important;
+                max-height: calc(100dvh - 34px) !important;
+            }
+
+            #win-about {
+                position: fixed !important;
+                top: 24px !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: calc(100dvh - 24px) !important;
+                max-width: none !important;
+                max-height: none !important;
+            }
+
+            .mac-window[data-maximized="true"]:not(#win-about) {
+                top: 28px !important;
+                left: 6px !important;
+                width: calc(100vw - 12px) !important;
+                height: calc(100dvh - 34px) !important;
+                max-width: calc(100vw - 12px) !important;
+                max-height: calc(100dvh - 34px) !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-mono text-black text-sm">
+
+    <!-- TOP MAC OS MENU BAR -->
+    <header id="menu-bar" class="w-full h-6 bg-white border-b border-black flex items-center justify-between px-2 select-none z-50 relative text-xs sm:text-sm">
+        <div class="flex items-center space-x-1 sm:space-x-3">
+            <!-- Linux / dopaemon Menu -->
+            <div class="menu-item relative px-2 py-0.5 hover:bg-black hover:text-white cursor-pointer flex items-center">
+                <img src="https://avatars.githubusercontent.com/u/43093213?v=4" alt="dopaemon" class="w-4 h-4 rounded-full inline-block object-cover border border-black" />
+                <div class="menu-item-dropdown">
+                    <div class="dropdown-row font-bold" onclick="openAboutMac()" data-en="About dopaemon..." data-vi="Về dopaemon...">About dopaemon...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-row" onclick="openApp('calc')" data-en="Calculator" data-vi="Máy Tính (Calculator)">Calculator</div>
+                    <div class="dropdown-row" onclick="openApp('puzzle')" data-en="15-Puzzle Game" data-vi="Xếp Hình 15 (Puzzle)">15-Puzzle Game</div>
+                    <div class="dropdown-row" onclick="openApp('terminal')" data-en="Terminal.app (CLI)" data-vi="Terminal.app (Giao diện CLI)">Terminal.app (CLI)</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-row" onclick="openWindow('skills')" data-en="Control Panel - Skills" data-vi="Control Panel - Kỹ Năng">Control Panel - Skills</div>
+                    <div class="dropdown-row" onclick="openWindow('donate')" data-en="Control Panel - Support" data-vi="Control Panel - Ủng Hộ">Control Panel - Support</div>
+                </div>
+            </div>
+
+            <!-- File Menu -->
+            <div class="menu-item relative px-2 py-0.5 hover:bg-black hover:text-white cursor-pointer">
+                <span class="font-bold" data-en="File" data-vi="Tập Tin">File</span>
+                <div class="menu-item-dropdown">
+                    <div class="dropdown-row" onclick="openSelectedIcon()"><span data-en="Open Item" data-vi="Mở Tập Tin">Open Item</span> <span class="text-xs opacity-60">⌘O</span></div>
+                    <div class="dropdown-row" onclick="closeActiveWindow()"><span data-en="Close Window" data-vi="Đóng Cửa Sổ">Close Window</span> <span class="text-xs opacity-60">⌘W</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-row" onclick="openWindow('about')"><span data-en="Get Info" data-vi="Thông Tin Kỹ Sư">Get Info</span> <span class="text-xs opacity-60">⌘I</span></div>
+                </div>
+            </div>
+
+            <!-- Edit Menu -->
+            <div class="menu-item relative px-2 py-0.5 hover:bg-black hover:text-white cursor-pointer hidden sm:block">
+                <span data-en="Edit" data-vi="Chỉnh Sửa">Edit</span>
+                <div class="menu-item-dropdown">
+                    <div class="dropdown-row opacity-50 cursor-not-allowed"><span data-en="Undo" data-vi="Hoàn tác">Undo</span> <span class="text-xs opacity-60">⌘Z</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-row" onclick="copyToClipboard('dopaemon - Tran Nguyen Tuan Anh (Dalat University)')" data-en="Copy Bio Profile" data-vi="Sao chép Profile Bio">Copy Bio Profile</div>
+                    <div class="dropdown-row" onclick="copyToClipboard('0009-0004-7600-5171')" data-en="Copy ORCID ID" data-vi="Sao chép ORCID ID">Copy ORCID ID</div>
+                </div>
+            </div>
+
+            <!-- View Menu -->
+            <div class="menu-item relative px-2 py-0.5 hover:bg-black hover:text-white cursor-pointer hidden sm:block">
+                <span data-en="View" data-vi="Hiển Thị">View</span>
+                <div class="menu-item-dropdown">
+                    <div class="dropdown-row" onclick="openWindow('projects')" data-en="View All Projects" data-vi="Xem Tất Cả Dự Án">View All Projects</div>
+                    <div class="dropdown-row" onclick="openWindow('resume')" data-en="Activity History & Badges" data-vi="Lịch Sử Hoạt Động & Badges">Activity History & Badges</div>
+                </div>
+            </div>
+
+            <!-- Special Menu -->
+            <div class="menu-item relative px-2 py-0.5 hover:bg-black hover:text-white cursor-pointer">
+                <span class="font-bold" data-en="Special" data-vi="Đặc Biệt">Special</span>
+                <div class="menu-item-dropdown">
+                    <div class="dropdown-row" onclick="arrangeIcons()" data-en="Clean Up Desktop" data-vi="Dọn Dẹp Desktop">Clean Up Desktop</div>
+                    <div class="dropdown-row" onclick="emptyTrash()" data-en="Empty Trash..." data-vi="Dọn Thùng Rác...">Empty Trash...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-row" onclick="restartSystem()" data-en="Restart System" data-vi="Khởi Động Lại System">Restart System</div>
+                    <div class="dropdown-row" onclick="shutdownSystem()" data-en="Shut Down" data-vi="Tắt Máy (Shut Down)">Shut Down</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side Controls -->
+        <div class="flex items-center space-x-1.5 sm:space-x-2 text-xs">
+            <!-- Language Switcher Button -->
+            <button id="lang-btn" onclick="toggleLanguage()" class="hover:bg-black hover:text-white px-1.5 py-0.5 border border-black font-bold bg-yellow-100 text-black flex items-center space-x-1" title="Switch Language / Đổi Ngôn Ngữ">
+                <span>🌐</span> <span id="lang-text">EN</span>
+            </button>
+            <button id="sound-btn" onclick="toggleSound()" class="hover:bg-black hover:text-white px-1 text-xs border border-transparent hover:border-black" title="System Sound Toggle">
+                🔊 Sound: ON
+            </button>
+            <div class="hidden md:flex items-center space-x-1 px-1 border border-black bg-gray-100">
+                <span id="active-app-name" class="font-bold">Finder</span>
+                <span>💾</span>
+            </div>
+            <div id="mac-clock" class="font-bold tracking-wider">00:00:00 AM</div>
+        </div>
+    </header>
+
+    <!-- DESKTOP CONTAINER -->
+    <main id="desktop" class="relative w-full h-[calc(100vh-24px)] p-4 overflow-hidden" onclick="deselectIcons(event)">
+        
+        <!-- Desktop Grid Icons -->
+        <div class="grid grid-flow-col auto-cols-max grid-rows-4 sm:grid-rows-5 gap-6 sm:gap-8 items-start justify-start select-none">
+            
+            <!-- Icon 1: About Me -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openWindow('about')" data-win="about">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <path d="M6 3H24L30 9V33H6V3Z" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+                        <path d="M24 3V9H30" fill="#DDDDDD" stroke="#000000" stroke-width="2"/>
+                        <circle cx="18" cy="15" r="5" fill="#000000"/>
+                        <path d="M10 28C10 22 26 22 26 28" stroke="#000000" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="About Me.txt" data-vi="Giới Thiệu.txt">About Me.txt</span>
+            </div>
+
+            <!-- Icon 2: Projects Folder -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openWindow('projects')" data-win="projects">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-12 h-10 drop-shadow" viewBox="0 0 40 32" fill="none">
+                        <path d="M2 6H14L18 10H38V30H2V6Z" fill="#FFE082" stroke="#000000" stroke-width="2"/>
+                        <path d="M2 10H38" stroke="#000000" stroke-width="2"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Projects Repo" data-vi="Dự Án Repo">Projects Repo</span>
+            </div>
+
+            <!-- Icon 3: Skills Control Panel -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openWindow('skills')" data-win="skills">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <rect x="4" y="4" width="28" height="28" fill="#D1D5DB" stroke="#000000" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="3" fill="#000000"/>
+                        <circle cx="24" cy="24" r="3" fill="#000000"/>
+                        <line x1="8" y1="20" x2="28" y2="20" stroke="#000000" stroke-width="2"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Skills.cdev" data-vi="Kỹ Năng.cdev">Skills.cdev</span>
+            </div>
+
+            <!-- Icon 4: Support / Donate Panel -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openWindow('donate')" data-win="donate">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <rect x="4" y="4" width="28" height="28" fill="#FDE68A" stroke="#000000" stroke-width="2"/>
+                        <path d="M12 18H24M18 12V24" stroke="#000000" stroke-width="3"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Support.cdev" data-vi="Ủng Hộ.cdev">Support.cdev</span>
+            </div>
+
+            <!-- Icon 5: Resume & Profile -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openWindow('resume')" data-win="resume">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <path d="M6 3H24L30 9V33H6V3Z" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+                        <path d="M10 12H26M10 18H26M10 24H20" stroke="#000000" stroke-width="2"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Resume & Badges" data-vi="Học Vấn & Badges">Resume & Badges</span>
+            </div>
+
+            <!-- Icon 6: Mail App -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openWindow('contact')" data-win="contact">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-12 h-10 drop-shadow" viewBox="0 0 40 30" fill="none">
+                        <rect x="2" y="4" width="36" height="22" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+                        <path d="M2 4L20 18L38 4" stroke="#000000" stroke-width="2"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Mail.app" data-vi="Gửi Thư.app">Mail.app</span>
+            </div>
+
+            <!-- Icon 7: CLI Terminal App -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openApp('terminal')">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <rect x="4" y="4" width="28" height="28" fill="#000000" stroke="#000000" stroke-width="2"/>
+                        <text x="8" y="18" fill="#00FF00" font-family="monospace" font-size="12" font-weight="bold">&gt;_</text>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words">Terminal.app</span>
+            </div>
+
+            <!-- Icon 8: Calculator -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openApp('calc')">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <rect x="6" y="2" width="24" height="32" fill="#E5E7EB" stroke="#000000" stroke-width="2"/>
+                        <rect x="9" y="5" width="18" height="6" fill="#A7F3D0" stroke="#000000" stroke-width="1"/>
+                        <circle cx="12" cy="16" r="1.5" fill="#000"/>
+                        <circle cx="18" cy="16" r="1.5" fill="#000"/>
+                        <circle cx="24" cy="16" r="1.5" fill="#000"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Calculator" data-vi="Máy Tính">Calculator</span>
+            </div>
+
+            <!-- Icon 9: Puzzle Game -->
+            <div class="desktop-icon w-20 flex flex-col items-center cursor-pointer group" onclick="selectIcon(this, event)" ondblclick="openApp('puzzle')">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-10 drop-shadow" viewBox="0 0 36 36" fill="none">
+                        <rect x="4" y="4" width="28" height="28" fill="#F3F4F6" stroke="#000000" stroke-width="2"/>
+                        <path d="M4 18H32M18 4V32" stroke="#000000" stroke-width="1.5"/>
+                        <text x="8" y="15" font-size="10" font-weight="bold">1</text>
+                        <text x="22" y="15" font-size="10" font-weight="bold">2</text>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="15-Puzzle" data-vi="Xếp Hình 15">15-Puzzle</span>
+            </div>
+
+            <!-- Icon 10: Trash Can -->
+            <div id="trash-icon" class="desktop-icon w-20 flex flex-col items-center cursor-pointer group absolute bottom-4 right-4" onclick="selectIcon(this, event)" ondblclick="emptyTrash()">
+                <div class="icon-img w-12 h-12 flex items-center justify-center mb-1">
+                    <svg class="w-10 h-12 drop-shadow" viewBox="0 0 32 38" fill="none">
+                        <path d="M6 10L8 34H24L26 10H6Z" fill="#D1D5DB" stroke="#000000" stroke-width="2"/>
+                        <path d="M4 10H28M12 5H20M12 5V10M20 5V10" stroke="#000000" stroke-width="2"/>
+                        <line x1="12" y1="15" x2="13" y2="29" stroke="#000000" stroke-width="1.5"/>
+                        <line x1="16" y1="15" x2="16" y2="29" stroke="#000000" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <span class="icon-label text-center text-xs px-1 bg-white text-black border border-transparent group-hover:border-black break-words" data-en="Trash" data-vi="Thùng Rác">Trash</span>
+            </div>
+
+        </div>
+
+        <!-- WINDOW 1: ABOUT ME (dopaemon Overview) -->
+        <div id="win-about" class="mac-window mac-window-border absolute bg-white w-[92vw] max-w-[580px] h-[420px] hidden flex-col z-10 top-8 left-2 sm:left-16" onclick="focusWindow('win-about')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('win-about')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs truncate" data-en="About - Tran Nguyen Tuan Anh (dopaemon)" data-vi="Giới Thiệu - Trần Nguyễn Tuấn Anh (dopaemon)">About - Tran Nguyen Tuan Anh (dopaemon)</span>
+                </div>
+                <button class="w-3.5 h-3.5 border border-black bg-white flex items-center justify-center text-[9px]" onclick="toggleZoom('win-about')">□</button>
+            </div>
+            <div class="h-5 border-b border-black bg-gray-100 flex items-center px-2 text-xs text-gray-700 justify-between">
+                <span data-en="Dalat University | Systems & Kernel Engineer" data-vi="Đại học Đà Lạt | Systems & Kernel Engineer">Dalat University | Systems & Kernel Engineer</span>
+                <span>SimpleText Readme</span>
+            </div>
+            <div class="p-4 flex-1 overflow-y-auto bg-white font-mono text-xs sm:text-sm space-y-4 leading-relaxed">
+                <div class="flex items-center space-x-4 border-b border-gray-300 pb-3">
+                    <div class="w-16 h-16 border-2 border-black p-0.5 bg-gray-200 flex-shrink-0">
+                        <img src="https://avatars.githubusercontent.com/u/43093213?v=4" alt="dopaemon profile" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold underline">Trần Nguyễn Tuấn Anh (`dopaemon`)</h2>
+                        <p class="text-xs text-gray-700 mt-0.5" data-en="Systems Developer | Android Kernel & Custom ROM Builder | Go & Linux Enthusiast" data-vi="Phát triển hệ thống | Android Kernel & Custom ROM Builder | Đam mê Go & Linux">Systems Developer | Android Kernel & Custom ROM Builder | Go & Linux Enthusiast</p>
+                        <p class="text-xs text-blue-800 font-bold mt-1" data-en="📍 Dalat University, Vietnam" data-vi="📍 Đại học Đà Lạt, Việt Nam">📍 Dalat University, Vietnam</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm bg-gray-200 px-1 inline-block mb-1" data-en="■ OVERVIEW & COMPETENCIES:" data-vi="■ TỔNG QUAN NĂNG LỰC:">■ OVERVIEW & COMPETENCIES:</h3>
+                    <p data-en="I am a systems engineer with deep hands-on expertise across complex domains: from low-level network utility development, building Linux/Android Custom ROMs, customizing Klipper 3D printer firmware, to maintaining legacy iOS ecosystems." data-vi="Tôi là một kỹ sư hệ thống có năng lực thực chiến sâu rộng trên nhiều lĩnh vực phức tạp: từ phát triển công cụ mạng tầng thấp, build Linux/Android Custom ROM, tùy biến firmware Klipper cho máy in 3D, đến duy trì hệ sinh thái iOS legacy.">I am a systems engineer with deep hands-on expertise across complex domains: from low-level network utility development, building Linux/Android Custom ROMs, customizing Klipper 3D printer firmware, to maintaining legacy iOS ecosystems.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm bg-gray-200 px-1 inline-block mb-1" data-en="■ 5 CORE TECHNICAL PILLARS:" data-vi="■ 5 TRỤ CỘT CÔNG NGHỆ CHÍNH:">■ 5 CORE TECHNICAL PILLARS:</h3>
+                    <ul class="list-disc list-inside space-y-1 pl-2 text-xs">
+                        <li data-en="<b>System Programming & Kernel:</b> C/C++, Go, Shell, Android Custom ROMs (@RisingOS, @LotusOS, @KernelPanic)." data-vi="<b>Lập trình hệ thống & Kernel:</b> C/C++, Go, Shell, Android Custom ROMs (@RisingOS, @LotusOS, @KernelPanic)."><b>System Programming & Kernel:</b> C/C++, Go, Shell, Android Custom ROMs (@RisingOS, @LotusOS, @KernelPanic).</li>
+                        <li data-en="<b>Bootloader:</b> Halium, Mer-Hybris, EDK2, OpenCore, Clover." data-vi="<b>Lập trình bootloader:</b> Halium, Mer-Hybris, EDK2, OpenCore, Clover."><b>Bootloader:</b> Halium, Mer-Hybris, EDK2, OpenCore, Clover.</li>
+                        <li data-en="<b>Network Infra & Proxy:</b> Multi-arch X-UI (x86_64, arm64, riscv64, s390x), ProtonBox Auto-installer." data-vi="<b>Hạ tầng Mạng & Proxy:</b> X-UI (đa kiến trúc x86_64, arm64, riscv64, s390x), ProtonBox Auto-installer."><b>Network Infra & Proxy:</b> Multi-arch X-UI (x86_64, arm64, riscv64, s390x), ProtonBox Auto-installer.</li>
+                        <li data-en="<b>Hardware & IoT:</b> Klipper Firmware (Ender 3 v2 + CRTouch + Dual Drive), Single Board Computers." data-vi="<b>Phần cứng & IoT:</b> Firmware Klipper (Ender 3 v2 + CRTouch + Dual Drive), Single Board Computers."><b>Hardware & IoT:</b> Klipper Firmware (Ender 3 v2 + CRTouch + Dual Drive), Single Board Computers.</li>
+                        <li data-en="<b>iOS Legacy Tweaks:</b> Maintaining system tweaks & tools via @CydiaBlock organization." data-vi="<b>iOS Legacy Tweaks:</b> Duy trì các gói tùy biến hệ thống qua tổ chức @CydiaBlock."><b>iOS Legacy Tweaks:</b> Maintaining system tweaks & tools via @CydiaBlock organization.</li>
+                    </ul>
+                </div>
+
+                <div class="p-2 border border-black bg-yellow-50 text-xs" data-en="<b>💡 Interactive Tip:</b> Feel free to open the <b>Projects Repo</b> folder on Desktop, explore <b>Control Panels</b>, run commands in <b>Terminal.app</b>, or sponsor via <b>Support.cdev</b>!" data-vi="<b>💡 Mẹo tương tác:</b> Hãy mở thư mục <b>Dự Án Repo</b> trên Desktop, xem các <b>Control Panels</b>, thử chạy các lệnh trong <b>Terminal.app</b> hoặc ủng hộ tôi qua cửa sổ <b>Ủng Hộ.cdev</b>!">
+                    <b>💡 Interactive Tip:</b> Feel free to open the <b>Projects Repo</b> folder on Desktop, explore <b>Control Panels</b>, run commands in <b>Terminal.app</b>, or sponsor via <b>Support.cdev</b>!
+                </div>
+            </div>
+            <div class="h-4 border-t border-black bg-gray-200 flex items-center justify-between px-2 text-[10px]">
+                <span>ORCID: 0009-0004-7600-5171</span>
+                <span class="font-bold">System Ready</span>
+            </div>
+        </div>
+
+        <!-- WINDOW 2: PROJECTS LIST -->
+        <div id="win-projects" class="mac-window mac-window-border absolute bg-white w-[94vw] max-w-[660px] h-[440px] hidden flex-col z-10 top-12 left-2 sm:left-24" onclick="focusWindow('win-projects')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('win-projects')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs truncate" data-en="Featured Projects Repository" data-vi="Kho Lưu Trữ Dự Án Tiêu Biểu">Featured Projects Repository</span>
+                </div>
+                <button class="w-3.5 h-3.5 border border-black bg-white flex items-center justify-center text-[9px]" onclick="toggleZoom('win-projects')">□</button>
+            </div>
+            <div class="h-5 border-b border-black bg-gray-100 flex items-center px-2 text-xs justify-between">
+                <span data-en="5 Featured Repositories | 298+ Total Repos" data-vi="5 Dự Án Tiêu Biểu | 298+ Repo Tổng Cộng">5 Featured Repositories | 298+ Total Repos</span>
+                <span>GitHub Finder</span>
+            </div>
+            <!-- Projects Grid Content -->
+            <div class="p-3 flex-1 overflow-y-auto bg-white grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Project 1 -->
+                <div class="border border-black p-2.5 bg-gray-50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1.5 border-b border-black pb-1 mb-1.5">
+                            <span class="text-base">🌐</span>
+                            <h3 class="font-bold text-xs sm:text-sm truncate">x-ui (Multi-arch Edition)</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 mb-2" data-en="Optimized X-UI distribution with Xray-core auto-updates, multi-architecture support (x86_64, arm64, s390x, riscv64)." data-vi="Bản phân phối X-UI tối ưu hóa cho cộng đồng VN, hỗ trợ cập nhật Xray-core, đa kiến trúc x86_64, arm64, s390x, riscv64.">Optimized X-UI distribution with Xray-core auto-updates, multi-architecture support (x86_64, arm64, s390x, riscv64).</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="px-1 border border-black text-[10px] bg-white">Go</span>
+                            <span class="px-1 border border-black text-[10px] bg-white">Xray-core</span>
+                            <span class="px-1 border border-black text-[10px] bg-white">Shell</span>
+                        </div>
+                    </div>
+                    <button class="mac-btn text-xs w-full" onclick="showProjectDetails('dopaemon/x-ui', 'Cross-platform Proxy/VPN management panel with automatic core updates and multi-arch support.')" data-en="Project Details" data-vi="Chi Tiết Dự Án">Project Details</button>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="border border-black p-2.5 bg-gray-50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1.5 border-b border-black pb-1 mb-1.5">
+                            <span class="text-base">📦</span>
+                            <h3 class="font-bold text-xs sm:text-sm truncate">ProtonBox Installer</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 mb-2" data-en="Automated Shell scripts for rapid deployment of VPN/Proxy management panels on Linux." data-vi="Bộ kịch bản Shell tự động hóa giúp triển khai nhanh chóng các bảng điều khiển VPN/Proxy và hệ thống quản lý V2Ray/Xray trên Linux.">Automated Shell scripts for rapid deployment of VPN/Proxy management panels on Linux.</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="px-1 border border-black text-[10px] bg-white">Shell/Bash</span>
+                            <span class="px-1 border border-black text-[10px] bg-white">Linux Admin</span>
+                        </div>
+                    </div>
+                    <button class="mac-btn text-xs w-full" onclick="showProjectDetails('dopaemon/ProtonBox', 'One-line automated installation tool for VPN/V2Ray servers on Ubuntu/Debian environments.')" data-en="Project Details" data-vi="Chi Tiết Dự Án">Project Details</button>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="border border-black p-2.5 bg-gray-50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1.5 border-b border-black pb-1 mb-1.5">
+                            <span class="text-base">🍏</span>
+                            <h3 class="font-bold text-xs sm:text-sm truncate">Cydia Block & iOS Tweaks</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 mb-2" data-en="Maintaining system tweaks and development tools extending the lifecycle of legacy iOS devices." data-vi="Dự án duy trì và phát triển các tinh chỉnh (tweaks), công cụ hệ thống giúp kéo dài vòng đời phần mềm cho các thiết bị iOS đời cũ.">Maintaining system tweaks and development tools extending the lifecycle of legacy iOS devices.</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="px-1 border border-black text-[10px] bg-white">Objective-C</span>
+                            <span class="px-1 border border-black text-[10px] bg-white">Debian Package</span>
+                        </div>
+                    </div>
+                    <button class="mac-btn text-xs w-full" onclick="showProjectDetails('CydiaBlock Ecosystem', 'Dedicated Cydia repository containing custom patches and tweaks optimized for classic Apple hardware.')" data-en="Project Details" data-vi="Chi Tiết Dự Án">Project Details</button>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="border border-black p-2.5 bg-gray-50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1.5 border-b border-black pb-1 mb-1.5">
+                            <span class="text-base">🖨️</span>
+                            <h3 class="font-bold text-xs sm:text-sm truncate">Klipper 3D Printer Configs</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 mb-2" data-en="Optimized configurations for Creality Ender 3 v2 with CRTouch, Dual Drive Extruder, and KAMP scripts." data-vi="Cấu hình tối ưu hóa cho máy in 3D Creality Ender 3 v2 tích hợp CRTouch, Dual Drive Extruder và kịch bản KAMP.">Optimized configurations for Creality Ender 3 v2 with CRTouch, Dual Drive Extruder, and KAMP scripts.</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="px-1 border border-black text-[10px] bg-white">Klipper Firmware</span>
+                            <span class="px-1 border border-black text-[10px] bg-white">G-Code</span>
+                        </div>
+                    </div>
+                    <button class="mac-btn text-xs w-full" onclick="showProjectDetails('Klipper Gist Configs', 'Fine-tuned printer.cfg and satsuma_configs.cfg files maximizing 3D printing speed and print quality.')" data-en="Project Details" data-vi="Chi Tiết Dự Án">Project Details</button>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="border border-black p-2.5 bg-gray-50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1.5 border-b border-black pb-1 mb-1.5">
+                            <span class="text-base">💻</span>
+                            <h3 class="font-bold text-xs sm:text-sm truncate">Hackintosh Asus ROG GL55JX</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 mb-2" data-en="Boot and Optimized macOS Big Sur / Monterey On Asus ROG GL552JX." data-vi="Khởi động và tối ưu hoá hệ thống macOS big sur và monterey trên Asus ROG GL552JX.">Boot and Optimized macOS Big Sur / Monterey On Asus ROG GL552JX.</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="px-1 border border-black text-[10px] bg-white">OpenCore</span>
+                            <span class="px-1 border border-black text-[10px] bg-white">Hackintosh</span>
+                        </div>
+                    </div>
+                    <button class="mac-btn text-xs w-full" onclick="showProjectDetails('Hackintosh On GL552JX', 'Debug Kext and fixed hardware for OpenCore / macOS.')" data-en="Project Details" data-vi="Chi Tiết Dự Án">Project Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- WINDOW 3: SKILLS CONTROL PANEL -->
+        <div id="win-skills" class="mac-window mac-window-border absolute bg-white w-[90vw] max-w-[500px] h-[400px] hidden flex-col z-10 top-16 left-4 sm:left-32" onclick="focusWindow('win-skills')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('win-skills')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs truncate" data-en="Control Panel - Technical Skills" data-vi="Control Panel - Kỹ Năng Kỹ Thuật">Control Panel - Technical Skills</span>
+                </div>
+                <button class="w-3.5 h-3.5 border border-black bg-white flex items-center justify-center text-[9px]" onclick="toggleZoom('win-skills')">□</button>
+            </div>
+            <div class="p-4 flex-1 overflow-y-auto bg-gray-100 text-xs space-y-4">
+                <div class="border border-black p-3 bg-white">
+                    <h3 class="font-bold mb-2 text-sm border-b border-black pb-1" data-en="⚡ System Programming & Languages" data-vi="⚡ Lập Trình Hệ Thống & Ngôn Ngữ">⚡ System Programming & Languages</h3>
+                    <div class="space-y-2">
+                        <div>
+                            <div class="flex justify-between mb-1"><span>GoLang / Shell (Bash)</span><span>95%</span></div>
+                            <div class="w-full bg-gray-300 h-3 border border-black p-0.5"><div class="bg-black h-full w-[95%]"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>C / C++ (Low-Level Systems)</span><span>88%</span></div>
+                            <div class="w-full bg-gray-300 h-3 border border-black p-0.5"><div class="bg-black h-full w-[88%]"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>JavaScript / Web Frontend</span><span>82%</span></div>
+                            <div class="w-full bg-gray-300 h-3 border border-black p-0.5"><div class="bg-black h-full w-[82%]"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-black p-3 bg-white">
+                    <h3 class="font-bold mb-2 text-sm border-b border-black pb-1" data-en="⚙️ Kernel, OS & Network Infrastructure" data-vi="⚙️ Kernel, OS & Hạ Tầng Mạng">⚙️ Kernel, OS & Network Infrastructure</h3>
+                    <div class="space-y-2">
+                        <div>
+                            <div class="flex justify-between mb-1"><span>Android Custom ROM / Kernel Building</span><span>92%</span></div>
+                            <div class="w-full bg-gray-300 h-3 border border-black p-0.5"><div class="bg-black h-full w-[92%]"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>Xray / V2Ray / X-UI / WireGuard</span><span>95%</span></div>
+                            <div class="w-full bg-gray-300 h-3 border border-black p-0.5"><div class="bg-black h-full w-[95%]"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>Linux Admin / SBCs (ARM64 / RISC-V)</span><span>90%</span></div>
+                            <div class="w-full bg-gray-300 h-3 border border-black p-0.5"><div class="bg-black h-full w-[90%]"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WINDOW 4: DONATE / SPONSORSHIP CONTROL PANEL -->
+        <div id="win-donate" class="mac-window mac-window-border absolute bg-white w-[90vw] max-w-[520px] h-[410px] hidden flex-col z-10 top-10 left-3 sm:left-40" onclick="focusWindow('win-donate')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('win-donate')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs truncate" data-en="Control Panel - Sponsorship Channels" data-vi="Control Panel - Kênh Ủng Hộ (Sponsorship)">Control Panel - Sponsorship Channels</span>
+                </div>
+                <button class="w-3.5 h-3.5 border border-black bg-white flex items-center justify-center text-[9px]" onclick="toggleZoom('win-donate')">□</button>
+            </div>
+            <div class="p-4 flex-1 overflow-y-auto bg-gray-100 text-xs space-y-3">
+                <p class="text-xs text-gray-700 bg-yellow-100 p-2 border border-black" data-en="☕ If dopaemon's open-source projects bring value to you, feel free to sponsor via these channels:" data-vi="☕ Nếu các dự án mã nguồn mở của <b>dopaemon</b> mang lại giá trị cho bạn, hãy ủng hộ tôi qua các kênh sau:">
+                    ☕ If dopaemon's open-source projects bring value to you, feel free to sponsor via these channels:
+                </p>
+
+                <!-- Local Banking -->
+                <div class="border border-black p-2.5 bg-white space-y-2">
+                    <h4 class="font-bold border-b border-black pb-1" data-en="🏦 Local Banking (Vietnam):" data-vi="🏦 Ngân Hàng Việt Nam:">🏦 Local Banking (Vietnam):</h4>
+                    <div class="flex justify-between items-center bg-gray-50 p-1.5 border border-gray-300">
+                        <div><b>Cake Bank:</b> <span class="font-bold text-blue-900">0325555077</span></div>
+                        <button class="mac-btn text-[10px]" onclick="copyToClipboard('0325555077')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-50 p-1.5 border border-gray-300">
+                        <div><b>ACB Bank:</b> <span class="font-bold text-blue-900">5613177</span> (TRAN NGUYEN TUAN ANH)</div>
+                        <button class="mac-btn text-[10px]" onclick="copyToClipboard('5613177')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                    </div>
+                </div>
+
+                <!-- E-Wallets -->
+                <div class="border border-black p-2.5 bg-white space-y-2">
+                    <h4 class="font-bold border-b border-black pb-1" data-en="📱 E-Wallets / PayPal:" data-vi="📱 Ví Điện Tử / PayPal:">📱 E-Wallets / PayPal:</h4>
+                    <div class="flex justify-between items-center bg-gray-50 p-1.5 border border-gray-300">
+                        <div><b>Momo:</b> <span class="font-bold">0325555077</span></div>
+                        <button class="mac-btn text-[10px]" onclick="copyToClipboard('0325555077')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-50 p-1.5 border border-gray-300">
+                        <div><b>PayPal:</b> <span class="font-bold">paypal.me/dopaemon</span></div>
+                        <button class="mac-btn text-[10px]" onclick="copyToClipboard('https://paypal.me/dopaemon')" data-en="Copy Link" data-vi="Sao chép Link">Copy Link</button>
+                    </div>
+                </div>
+
+                <!-- Crypto -->
+                <div class="border border-black p-2.5 bg-white space-y-2">
+                    <h4 class="font-bold border-b border-black pb-1" data-en="🪙 Cryptocurrencies:" data-vi="🪙 Tiền Mã Hóa (Crypto):">🪙 Cryptocurrencies:</h4>
+                    <div class="flex justify-between items-center bg-gray-50 p-1.5 border border-gray-300 text-[11px]">
+                        <div class="truncate mr-2"><b>TRC20:</b> <code class="bg-gray-200 px-1">TYfNrngg74avxCoeraCD1zkgqD9BRyUuqY</code></div>
+                        <button class="mac-btn text-[10px] flex-shrink-0" onclick="copyToClipboard('TYfNrngg74avxCoeraCD1zkgqD9BRyUuqY')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-50 p-1.5 border border-gray-300 text-[11px]">
+                        <div class="truncate mr-2"><b>BEP20 / Polygon:</b> <code class="bg-gray-200 px-1">0xEB23bdeDC895549EB563e8ca624a42eb6b5bCe51</code></div>
+                        <button class="mac-btn text-[10px] flex-shrink-0" onclick="copyToClipboard('0xEB23bdeDC895549EB563e8ca624a42eb6b5bCe51')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WINDOW 5: RESUME, ACADEMIC & BADGES -->
+        <div id="win-resume" class="mac-window mac-window-border absolute bg-white w-[92vw] max-w-[540px] h-[400px] hidden flex-col z-10 top-14 left-4 sm:left-48" onclick="focusWindow('win-resume')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('win-resume')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs truncate" data-en="Education & GitHub Achievements" data-vi="Học Vấn & Danh Hiệu GitHub">Education & GitHub Achievements</span>
+                </div>
+                <button class="w-3.5 h-3.5 border border-black bg-white flex items-center justify-center text-[9px]" onclick="toggleZoom('win-resume')">□</button>
+            </div>
+            <div class="p-4 flex-1 overflow-y-auto bg-white font-mono text-xs sm:text-sm space-y-4">
+                <div class="border-b-2 border-black pb-2">
+                    <h2 class="text-base font-bold">🏫 Dalat University (Đại học Đà Lạt)</h2>
+                    <p class="text-xs text-gray-600" data-en="Workplace / Software Research & Development" data-vi="Đơn vị công tác / Nghiên cứu phát triển phần mềm">Workplace / Software Research & Development</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm bg-gray-200 px-1 inline-block mb-2" data-en="🏆 GitHub Achievements:" data-vi="🏆 Danh Hiệu GitHub Achievements:">🏆 GitHub Achievements:</h3>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="border border-black p-1.5 bg-gray-50">🏆 Arctic Code Vault Contributor</div>
+                        <div class="border border-black p-1.5 bg-gray-50">🦈 Pull Shark x2</div>
+                        <div class="border border-black p-1.5 bg-gray-50">🤝 Pair Extraordinaire x2</div>
+                        <div class="border border-black p-1.5 bg-gray-50">⚡ Quickdraw & Starstruck</div>
+                        <div class="border border-black p-1.5 bg-gray-50 col-span-2">💻 GitHub Developer Program Member</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm bg-gray-200 px-1 inline-block mb-2" data-en="🔗 Identity Ecosystem:" data-vi="🔗 Hệ Sinh Thái Định Danh:">🔗 Identity Ecosystem:</h3>
+                    <div class="space-y-1.5 text-xs">
+                        <div class="flex justify-between items-center">
+                            <span><b>ORCID ID:</b> 0009-0004-7600-5171</span>
+                            <button class="mac-btn text-[10px]" onclick="copyToClipboard('0009-0004-7600-5171')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span><b>Google Dev:</b> g.dev/dopaemon</span>
+                            <button class="mac-btn text-[10px]" onclick="copyToClipboard('https://g.dev/dopaemon')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span><b>Codeberg:</b> codeberg.org/dopaemon</span>
+                            <button class="mac-btn text-[10px]" onclick="copyToClipboard('https://codeberg.org/dopaemon')" data-en="Copy" data-vi="Sao chép">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WINDOW 6: CONTACT MAIL -->
+        <div id="win-contact" class="mac-window mac-window-border absolute bg-white w-[90vw] max-w-[460px] h-[370px] hidden flex-col z-10 top-16 left-2 sm:left-36" onclick="focusWindow('win-contact')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('win-contact')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs truncate" data-en="Send Mail - Mail Express" data-vi="Gửi Thư - Mail Express">Send Mail - Mail Express</span>
+                </div>
+                <button class="w-3.5 h-3.5 border border-black bg-white flex items-center justify-center text-[9px]" onclick="toggleZoom('win-contact')">□</button>
+            </div>
+            <form onsubmit="handleSendMail(event)" class="p-4 flex-1 bg-gray-100 flex flex-col justify-between text-xs">
+                <div class="space-y-3">
+                    <div>
+                        <label class="block font-bold mb-1" data-en="Name / Organization:" data-vi="Tên / Đơn vị liên hệ:">Name / Organization:</label>
+                        <input type="text" required placeholder="Enter your name..." class="w-full border border-black p-1.5 focus:outline-none bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1" data-en="Email Address:" data-vi="Địa chỉ Email:">Email Address:</label>
+                        <input type="email" required placeholder="email@domain.com" class="w-full border border-black p-1.5 focus:outline-none bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1" data-en="Message:" data-vi="Nội dung trao đổi:">Message:</label>
+                        <textarea required rows="4" placeholder="Type your message to dopaemon..." class="w-full border border-black p-1.5 focus:outline-none bg-white resize-none"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2 border-t border-gray-300">
+                    <button type="button" class="mac-btn" onclick="closeWindow('win-contact')" data-en="Cancel" data-vi="Hủy Bỏ">Cancel</button>
+                    <button type="submit" class="mac-btn mac-btn-default" data-en="📬 Send Mail" data-vi="📬 Gửi Thư">📬 Send Mail</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- APP 1: RETRO TERMINAL CLI -->
+        <div id="app-terminal" class="mac-window mac-window-border absolute bg-black w-[92vw] max-w-[560px] h-[340px] hidden flex-col z-20 top-12 left-4 sm:left-44" onclick="focusWindow('app-terminal')">
+            <div class="mac-titlebar h-6 border-b border-gray-700 flex items-center justify-between px-1 bg-gray-200 select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('app-terminal')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-gray-200 px-2 font-bold text-xs text-black">Terminal v1.0 - dopaemon@dlu</span>
+                </div>
+                <div class="w-3.5"></div>
+            </div>
+            <div id="terminal-output" class="terminal-body p-3 flex-1 overflow-y-auto text-xs leading-relaxed">
+                <div>Welcome to dopaemon System Terminal v1.0 [Dalat University]</div>
+                <div>Type '<span class="text-yellow-400">help</span>' to list available commands.</div>
+                <br>
+            </div>
+            <div class="bg-black p-2 border-t border-gray-800 flex items-center">
+                <span class="text-green-400 font-bold mr-2">dopaemon:~#</span>
+                <input id="terminal-input" type="text" class="bg-transparent text-green-400 focus:outline-none w-full font-mono text-xs" onkeydown="handleTerminalCommand(event)">
+            </div>
+        </div>
+
+        <!-- APP 2: CALCULATOR APP -->
+        <div id="app-calc" class="mac-window mac-window-border absolute bg-white w-56 h-72 hidden flex-col z-20 top-20 left-10 sm:left-60" onclick="focusWindow('app-calc')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('app-calc')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs">Máy Tính</span>
+                </div>
+                <div class="w-3.5"></div>
+            </div>
+            <div class="p-3 bg-gray-200 flex-1 flex flex-col justify-between">
+                <div id="calc-display" class="bg-emerald-100 border-2 border-black p-2 text-right font-mono text-lg font-bold overflow-hidden mb-2">0</div>
+                <div class="grid grid-cols-4 gap-1.5 flex-1">
+                    <button class="mac-btn text-xs font-bold" onclick="calcInput('C')">C</button>
+                    <button class="mac-btn text-xs font-bold" onclick="calcInput('/')">/</button>
+                    <button class="mac-btn text-xs font-bold" onclick="calcInput('*')">*</button>
+                    <button class="mac-btn text-xs font-bold" onclick="calcInput('-')">-</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('7')">7</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('8')">8</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('9')">9</button>
+                    <button class="mac-btn text-xs font-bold" onclick="calcInput('+')">+</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('4')">4</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('5')">5</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('6')">6</button>
+                    <button class="mac-btn text-xs font-bold row-span-2" onclick="calcInput('=')">=</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('1')">1</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('2')">2</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('3')">3</button>
+                    <button class="mac-btn text-xs col-span-2" onclick="calcInput('0')">0</button>
+                    <button class="mac-btn text-xs" onclick="calcInput('.')">.</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- APP 3: PUZZLE 15 GAME -->
+        <div id="app-puzzle" class="mac-window mac-window-border absolute bg-white w-64 h-80 hidden flex-col z-20 top-24 left-16 sm:left-72" onclick="focusWindow('app-puzzle')">
+            <div class="mac-titlebar h-6 border-b border-black flex items-center justify-between px-1 bg-white select-none cursor-move">
+                <button class="mac-close-btn w-3.5 h-3.5 border border-black bg-white hover:bg-black focus:outline-none" onclick="closeWindow('app-puzzle')"></button>
+                <div class="mac-title-stripes mac-stripes flex-1 h-3.5 mx-2 flex items-center justify-center">
+                    <span class="bg-white px-2 font-bold text-xs">Xếp Hình 15</span>
+                </div>
+                <div class="w-3.5"></div>
+            </div>
+            <div class="p-3 bg-gray-200 flex-1 flex flex-col items-center justify-between">
+                <div id="puzzle-board" class="grid grid-cols-4 gap-1 w-48 h-48 bg-black p-1 border border-black"></div>
+                <div class="flex justify-between w-full items-center text-xs pt-1">
+                    <span id="puzzle-moves" class="font-bold">Bước: 0</span>
+                    <button class="mac-btn" onclick="initPuzzle()">Xáo Trộn</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIALOG: ABOUT THIS MAC OS -->
+        <div id="dialog-about-mac" class="mac-window-border fixed inset-0 m-auto w-[88vw] max-w-[400px] h-64 bg-white hidden flex-col z-[9999] p-4 shadow-2xl" onclick="focusWindow('dialog-about-mac')">
+            <div class="flex items-start space-x-3 border-b border-black pb-3">
+                <img src="https://avatars.githubusercontent.com/u/43093213?v=4" alt="dopaemon avatar" class="w-10 h-10 rounded border border-black object-cover flex-shrink-0" />
+                <div>
+                    <h2 class="font-bold text-sm">dopaemon</h2>
+                    <p class="text-xs text-gray-600">Trần Nguyễn Tuấn Anh | Dalat University</p>
+                    <p class="text-[11px] text-gray-500 mt-1">Linux & Systems Engineer Edition</p>
+                </div>
+            </div>
+            <div class="py-2.5 text-xs space-y-1 flex-1">
+                <div class="flex justify-between"><span>Built-in Memory:</span><span class="font-bold">128,000 KB</span></div>
+                <div class="flex justify-between"><span>Total Repositories:</span><span class="font-bold">298+ Repos</span></div>
+                <div class="flex justify-between"><span>GitHub Followers:</span><span class="font-bold">1,200+ Followers</span></div>
+                <div class="flex justify-between"><span data-en="Location:" data-vi="Địa điểm:">Location:</span><span class="font-bold">Dalat, Vietnam</span></div>
+            </div>
+            <div class="flex justify-end">
+                <button class="mac-btn mac-btn-default" onclick="closeAboutMac()" data-en="Close OK" data-vi="Đóng OK">Close OK</button>
+            </div>
+        </div>
+
+        <!-- DIALOG: GENERIC ALERT MODAL -->
+        <div id="dialog-alert" class="mac-window-border fixed inset-0 m-auto w-[85vw] max-w-[340px] h-40 bg-white hidden flex-col z-[9999] p-4 justify-between shadow-2xl">
+            <div class="flex items-center space-x-3">
+                <span class="text-3xl">⚠️</span>
+                <p id="alert-msg" class="text-xs font-bold leading-normal">Notice from dopaemon system.</p>
+            </div>
+            <div class="flex justify-end">
+                <button class="mac-btn mac-btn-default" onclick="closeAlert()" data-en="OK" data-vi="Đồng Ý">OK</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        /* LANGUAGE SYSTEM (EN / VI) */
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            playSound('click');
+            setLanguage(currentLang === 'en' ? 'vi' : 'en');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const langTextEl = document.getElementById('lang-text');
+            if (langTextEl) langTextEl.innerText = currentLang.toUpperCase();
+
+            // Update all elements with data-en and data-vi attributes
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.dataset[currentLang]) {
+                    el.innerHTML = el.dataset[currentLang];
+                }
+            });
+        }
+
+        /* SOUND SYNTHESIZER (WEB AUDIO API) */
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(400, now + 0.03);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.03);
+                osc.start(now);
+                osc.stop(now + 0.03);
+            } else if (type === 'chime') {
+                // Mac OS Classic Startup Chord
+                [261.63, 329.63, 392.00, 523.25].forEach((freq) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'triangle';
+                    o.frequency.setValueAtTime(freq, now);
+                    g.gain.setValueAtTime(0.12, now);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.start(now);
+                    o.stop(now + 1.2);
+                });
+            } else if (type === 'trash') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.linearRampToValueAtTime(40, now + 0.2);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } else if (type === 'beep') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, now);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-btn');
+            btn.innerText = soundEnabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
+            if (soundEnabled) playSound('click');
+        }
+
+        /* WINDOW MANAGER SYSTEM */
+        let highestZIndex = 100;
+        let activeWindowId = null;
+
+        function openWindow(id) {
+            playSound('click');
+            const win = document.getElementById('win-' + id) || document.getElementById(id);
+            if (!win) return;
+
+            win.classList.remove('hidden');
+            win.classList.add('flex');
+            focusWindow(win.id);
+        }
+
+        function openApp(appId) {
+            playSound('click');
+            const win = document.getElementById('app-' + appId);
+            if (!win) return;
+
+            win.classList.remove('hidden');
+            win.classList.add('flex');
+            focusWindow(win.id);
+
+            if (appId === 'puzzle' && !puzzleInitialized) {
+                initPuzzle();
+            }
+        }
+
+        function closeWindow(id) {
+            playSound('click');
+            const win = document.getElementById(id);
+            if (win) {
+                win.classList.add('hidden');
+                win.classList.remove('flex');
+            }
+        }
+
+        function closeActiveWindow() {
+            if (activeWindowId) {
+                closeWindow(activeWindowId);
+            }
+        }
+
+        function focusWindow(id) {
+            const win = document.getElementById(id);
+            if (!win) return;
+
+            highestZIndex++;
+            win.style.zIndex = highestZIndex;
+            activeWindowId = id;
+
+            // Titlebar active/inactive stripe toggling
+            document.querySelectorAll('.mac-window').forEach(w => {
+                const stripes = w.querySelector('.mac-title-stripes');
+                if (stripes) {
+                    if (w.id === id) {
+                        stripes.classList.remove('mac-stripes-inactive');
+                        stripes.classList.add('mac-stripes');
+                    } else {
+                        stripes.classList.remove('mac-stripes');
+                        stripes.classList.add('mac-stripes-inactive');
+                    }
+                }
+            });
+
+            // Update top bar app indicator
+            const appName = win.querySelector('.mac-title-stripes span')?.innerText || 'Finder';
+            const activeAppNameEl = document.getElementById('active-app-name');
+            if (activeAppNameEl) activeAppNameEl.innerText = appName.split(' - ')[0];
+        }
+
+        function toggleZoom(id) {
+            playSound('click');
+            const win = document.getElementById(id);
+            if (!win) return;
+
+            // Mobile: only About Me may use full-screen.
+            if (window.matchMedia('(max-width: 640px)').matches && win.id !== 'win-about') {
+                win.style.top = '28px';
+                win.style.left = '6px';
+                win.style.width = 'calc(100vw - 12px)';
+                win.style.height = 'calc(100dvh - 34px)';
+                win.style.maxWidth = 'calc(100vw - 12px)';
+                win.style.maxHeight = 'calc(100dvh - 34px)';
+                win.dataset.maximized = 'false';
+                focusWindow(win.id);
+                return;
+            }
+
+            if (win.dataset.maximized === 'true') {
+                win.style.width = win.dataset.origW;
+                win.style.height = win.dataset.origH;
+                win.style.top = win.dataset.origT;
+                win.style.left = win.dataset.origL;
+                win.style.maxWidth = win.dataset.origMaxW || '';
+                win.style.maxHeight = win.dataset.origMaxH || '';
+                win.dataset.maximized = 'false';
+            } else {
+                win.dataset.origW = win.style.width || getComputedStyle(win).width;
+                win.dataset.origH = win.style.height || getComputedStyle(win).height;
+                win.dataset.origT = win.style.top || getComputedStyle(win).top;
+                win.dataset.origL = win.style.left || getComputedStyle(win).left;
+                win.dataset.origMaxW = win.style.maxWidth || getComputedStyle(win).maxWidth;
+                win.dataset.origMaxH = win.style.maxHeight || getComputedStyle(win).maxHeight;
+
+                win.style.top = '28px';
+                win.style.left = '8px';
+                win.style.width = 'calc(100vw - 16px)';
+                win.style.height = 'calc(100vh - 36px)';
+                win.style.maxWidth = 'none';
+                win.style.maxHeight = 'none';
+                win.dataset.maximized = 'true';
+            }
+        }
+
+        /* RESIZABLE WINDOWS ENGINE */
+        function initResizableWindows() {
+            const windows = document.querySelectorAll('.mac-window');
+
+            windows.forEach(win => {
+                if (!win.querySelector('.mac-resize-handle')) {
+                    const handle = document.createElement('div');
+                    handle.className = 'mac-resize-handle';
+                    handle.title = 'Resize Window';
+                    win.appendChild(handle);
+                }
+
+                const handle = win.querySelector('.mac-resize-handle');
+                if (!handle) return;
+
+                let isResizing = false;
+                let startX, startY, startW, startH;
+
+                const onStart = (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    isResizing = true;
+                    focusWindow(win.id);
+
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                    startX = clientX;
+                    startY = clientY;
+
+                    startW = win.offsetWidth;
+                    startH = win.offsetHeight;
+
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onEnd);
+                    document.addEventListener('touchmove', onMove, { passive: false });
+                    document.addEventListener('touchend', onEnd);
+                };
+
+                const onMove = (e) => {
+                    if (!isResizing) return;
+                    e.preventDefault();
+
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                    const deltaX = clientX - startX;
+                    const deltaY = clientY - startY;
+
+                    const minW = 220;
+                    const minH = 160;
+
+                    win.style.maxWidth = 'none';
+                    win.style.maxHeight = 'none';
+                    win.style.width = Math.max(minW, startW + deltaX) + 'px';
+                    win.style.height = Math.max(minH, startH + deltaY) + 'px';
+                };
+
+                const onEnd = () => {
+                    isResizing = false;
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onEnd);
+                    document.removeEventListener('touchmove', onMove);
+                    document.removeEventListener('touchend', onEnd);
+                };
+
+                handle.addEventListener('mousedown', onStart);
+                handle.addEventListener('touchstart', onStart, { passive: false });
+            });
+        }
+
+        /* DRAGGABLE WINDOWS ENGINE */
+        function initDraggableWindows() {
+            const windows = document.querySelectorAll('.mac-window');
+
+            windows.forEach(win => {
+                const titleBar = win.querySelector('.mac-titlebar');
+                if (!titleBar) return;
+
+                let isDragging = false;
+                let startX, startY, initialLeft, initialTop;
+
+                const onStart = (e) => {
+                    if (e.target.tagName === 'BUTTON') return;
+
+                    isDragging = true;
+                    focusWindow(win.id);
+
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                    startX = clientX;
+                    startY = clientY;
+
+                    // Fixed: Use offsetLeft & offsetTop to avoid viewport offset jump issue
+                    initialLeft = win.offsetLeft;
+                    initialTop = win.offsetTop;
+
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onEnd);
+                    document.addEventListener('touchmove', onMove, { passive: false });
+                    document.addEventListener('touchend', onEnd);
+                };
+
+                const onMove = (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                    const deltaX = clientX - startX;
+                    const deltaY = clientY - startY;
+
+                    win.style.left = Math.max(0, initialLeft + deltaX) + 'px';
+                    win.style.top = Math.max(0, initialTop + deltaY) + 'px';
+                };
+
+                const onEnd = () => {
+                    isDragging = false;
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onEnd);
+                    document.removeEventListener('touchmove', onMove);
+                    document.removeEventListener('touchend', onEnd);
+                };
+
+                titleBar.addEventListener('mousedown', onStart);
+                titleBar.addEventListener('touchstart', onStart, { passive: false });
+            });
+        }
+
+        /* DESKTOP ICON SELECTION & ACTIONS */
+        function selectIcon(element, event) {
+            event.stopPropagation();
+            playSound('click');
+            document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function deselectIcons(event) {
+            if (event.target.id === 'desktop') {
+                document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+            }
+        }
+
+        function openSelectedIcon() {
+            const selected = document.querySelector('.desktop-icon.selected');
+            if (selected) {
+                const targetWin = selected.dataset.win;
+                if (targetWin) openWindow(targetWin);
+            }
+        }
+
+        function arrangeIcons() {
+            playSound('click');
+            const msg = currentLang === 'en' 
+                ? 'Desktop icons rearranged automatically!' 
+                : 'Đã tự động sắp xếp các biểu tượng trên dopaemon Desktop!';
+            showAlert(msg);
+        }
+
+        function emptyTrash() {
+            playSound('trash');
+            const msg = currentLang === 'en' 
+                ? 'Trash emptied successfully!' 
+                : 'Thùng rác hệ thống đã được dọn dẹp sạch sẽ!';
+            showAlert(msg);
+        }
+
+        function restartSystem() {
+            playSound('chime');
+            document.body.style.opacity = '0.2';
+            setTimeout(() => {
+                location.reload();
+            }, 600);
+        }
+
+        function shutdownSystem() {
+            playSound('chime');
+            const shutdownText = currentLang === 'en'
+                ? 'It is now safe to turn off your dopaemon computer.'
+                : 'An toàn để tắt máy tính dopaemon của bạn lúc này.';
+            const btnText = currentLang === 'en' ? 'Restart System' : 'Khởi Động Lại Hệ Thống';
+
+            document.body.innerHTML = `
+                <div class="h-screen w-screen bg-black text-white flex flex-col items-center justify-center p-4 text-center font-mono select-none">
+                    <p class="text-xl mb-4">${shutdownText}</p>
+                    <button class="mac-btn text-black bg-white px-4 py-2" onclick="location.reload()">${btnText}</button>
+                </div>
+            `;
+        }
+
+        /* DIALOG MODALS */
+        function openAboutMac() {
+            playSound('click');
+            const dialog = document.getElementById('dialog-about-mac');
+            highestZIndex += 1000;
+            dialog.style.zIndex = highestZIndex;
+            dialog.classList.remove('hidden');
+            dialog.classList.add('flex');
+        }
+
+        function closeAboutMac() {
+            playSound('click');
+            document.getElementById('dialog-about-mac').classList.add('hidden');
+            document.getElementById('dialog-about-mac').classList.remove('flex');
+        }
+
+        function showAlert(msg) {
+            playSound('beep');
+            const dialog = document.getElementById('dialog-alert');
+            highestZIndex += 1000;
+            dialog.style.zIndex = highestZIndex;
+            document.getElementById('alert-msg').innerText = msg;
+            dialog.classList.remove('hidden');
+            dialog.classList.add('flex');
+        }
+
+        function closeAlert() {
+            playSound('click');
+            document.getElementById('dialog-alert').classList.add('hidden');
+            document.getElementById('dialog-alert').classList.remove('flex');
+        }
+
+        function showProjectDetails(title, desc) {
+            showAlert(`[Dự Án: ${title}]\n\n${desc}`);
+        }
+
+        function copyToClipboard(text) {
+            playSound('click');
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            const msg = currentLang === 'en'
+                ? 'Successfully copied to clipboard:\n' + text
+                : 'Đã sao chép thành công vào Clipboard:\n' + text;
+            showAlert(msg);
+        }
+
+        function handleSendMail(e) {
+            e.preventDefault();
+            playSound('chime');
+            const msg = currentLang === 'en'
+                ? 'Thank you! Your message has been sent to dopaemon.'
+                : 'Cảm ơn bạn! Thư liên hệ đã được gửi thành công tới dopaemon.';
+            showAlert(msg);
+            closeWindow('win-contact');
+        }
+
+        /* TERMINAL CLI LOGIC */
+        function handleTerminalCommand(e) {
+            if (e.key === 'Enter') {
+                playSound('click');
+                const input = e.target.value.trim().toLowerCase();
+                const output = document.getElementById('terminal-output');
+                
+                const line = document.createElement('div');
+                line.innerHTML = `<span class="text-green-400">dopaemon:~#</span> ${e.target.value}`;
+                output.appendChild(line);
+
+                const response = document.createElement('div');
+                response.className = 'mb-2 text-gray-300';
+
+                switch(input) {
+                    case 'help':
+                        response.innerHTML = `
+                            Available commands:<br>
+                            - <span class="text-yellow-300">whoami</span>: View engineer profile<br>
+                            - <span class="text-yellow-300">projects</span>: List main repositories<br>
+                            - <span class="text-yellow-300">skills</span>: Technical stacks summary<br>
+                            - <span class="text-yellow-300">contact</span>: Show contact & ORCID ID<br>
+                            - <span class="text-yellow-300">clear</span>: Clear terminal window
+                        `;
+                        break;
+                    case 'whoami':
+                        response.innerHTML = 'Trần Nguyễn Tuấn Anh (dopaemon) - Dalat University<br>Systems Developer | Android Kernel & Custom ROM Builder';
+                        break;
+                    case 'projects':
+                        response.innerHTML = '- dopaemon/x-ui (Multi-arch Xray GUI)<br>- dopaemon/ProtonBox (Auto Installer)<br>- CydiaBlock (iOS Tweaks)<br>- Klipper 3D Printer Configs';
+                        break;
+                    case 'skills':
+                        response.innerHTML = 'Languages: Go, C/C++, Shell/Bash, JS<br>Systems: Android Kernel/ROMs, Linux, Xray/V2Ray, Klipper Firmware';
+                        break;
+                    case 'contact':
+                        response.innerHTML = 'ORCID: 0009-0004-7600-5171 | Dalat University, Vietnam';
+                        break;
+                    case 'clear':
+                        output.innerHTML = '';
+                        e.target.value = '';
+                        return;
+                    default:
+                        response.innerHTML = `<span class="text-red-400">Command not found: ${input}</span>. Type 'help' for options.`;
+                }
+
+                output.appendChild(response);
+                output.scrollTop = output.scrollHeight;
+                e.target.value = '';
+            }
+        }
+
+        /* CALCULATOR APP LOGIC */
+        let calcVal = '0';
+        function calcInput(key) {
+            playSound('click');
+            const display = document.getElementById('calc-display');
+
+            if (key === 'C') {
+                calcVal = '0';
+            } else if (key === '=') {
+                try {
+                    calcVal = String(eval(calcVal.replace(/[^0-9+\-*/.]/g, '')));
+                } catch {
+                    calcVal = 'Error';
+                }
+            } else {
+                if (calcVal === '0' || calcVal === 'Error') calcVal = key;
+                else calcVal += key;
+            }
+            display.innerText = calcVal.substring(0, 10);
+        }
+
+        /* PUZZLE 15 GAME LOGIC */
+        let puzzleState = [];
+        let puzzleMoves = 0;
+        let puzzleInitialized = false;
+
+        function initPuzzle() {
+            puzzleState = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+            for (let i = 0; i < 80; i++) {
+                const emptyIdx = puzzleState.indexOf(0);
+                const validMoves = getValidPuzzleMoves(emptyIdx);
+                const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                puzzleState[emptyIdx] = puzzleState[randomMove];
+                puzzleState[randomMove] = 0;
+            }
+            puzzleMoves = 0;
+            puzzleInitialized = true;
+            renderPuzzle();
+        }
+
+        function getValidPuzzleMoves(emptyIdx) {
+            const moves = [];
+            const row = Math.floor(emptyIdx / 4);
+            const col = emptyIdx % 4;
+
+            if (row > 0) moves.push(emptyIdx - 4);
+            if (row < 3) moves.push(emptyIdx + 4);
+            if (col > 0) moves.push(emptyIdx - 1);
+            if (col < 3) moves.push(emptyIdx + 1);
+
+            return moves;
+        }
+
+        function movePuzzleTile(idx) {
+            const emptyIdx = puzzleState.indexOf(0);
+            const valid = getValidPuzzleMoves(emptyIdx);
+
+            if (valid.includes(idx)) {
+                playSound('click');
+                puzzleState[emptyIdx] = puzzleState[idx];
+                puzzleState[idx] = 0;
+                puzzleMoves++;
+                renderPuzzle();
+
+                if (puzzleState.slice(0, 15).every((val, i) => val === i + 1)) {
+                    playSound('chime');
+                    showAlert(`🎉 Chúc mừng! Bạn đã hoàn thành trò chơi Xếp Hình 15 sau ${puzzleMoves} bước!`);
+                }
+            } else {
+                playSound('beep');
+            }
+        }
+
+        function renderPuzzle() {
+            const board = document.getElementById('puzzle-board');
+            const movesEl = document.getElementById('puzzle-moves');
+            if (!board) return;
+
+            board.innerHTML = '';
+            movesEl.innerText = `Bước: ${puzzleMoves}`;
+
+            puzzleState.forEach((val, idx) => {
+                const tile = document.createElement('div');
+                tile.className = `flex items-center justify-center font-bold text-sm select-none ${
+                    val === 0
+                        ? 'bg-black'
+                        : 'bg-white border border-black cursor-pointer hover:bg-gray-200'
+                }`;
+                tile.innerText = val === 0 ? '' : val;
+                if (val !== 0) {
+                    tile.onclick = () => movePuzzleTile(idx);
+                }
+                board.appendChild(tile);
+            });
+        }
+
+        /* CLOCK & SYSTEM INITIALIZATION */
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+
+            const clockEl = document.getElementById('mac-clock');
+            if (clockEl) {
+                clockEl.innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+            }
+        }
+
+        window.onload = function() {
+            initDraggableWindows();
+            initResizableWindows();
+            setInterval(updateClock, 1000);
+            updateClock();
+            setLanguage('en'); // Default language is English
+
+            // Boot chime sound & automatically open About Me window
+            setTimeout(() => {
+                playSound('chime');
+                openWindow('about');
+            }, 300);
+        };
+    </script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-02JP6Q1XMH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-02JP6Q1XMH');
+</script>
+</body>
+</html>
