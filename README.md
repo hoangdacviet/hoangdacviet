@@ -29,8 +29,9 @@ My goal is to turn ideas into useful products, build sustainable businesses, and
 
 [![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=hoangdacviet&theme=dark&background=000000)](https://git.io/streak-stats)
 
-## 🚀 What I'm Building  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)](https://komeverse.com) 
+## 🚀 What I'm Building  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)](https://komestudio.com/komeverse) 
 
+<img align="right" alt="Coding" src="imag/coding.gif" width="320px" />
 ### 🏭 [Kami Machine](https://kamimachine.com)
 Industrial machinery and automation solutions made in Vietnam.
 
