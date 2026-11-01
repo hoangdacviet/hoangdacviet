@@ -32,6 +32,7 @@ My goal is to turn ideas into useful products, build sustainable businesses, and
 ## 🚀 What I'm Building  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Roboto&pause=1000&color=FFFFFF&width=435&lines=KomeVerse+🤤)](https://komestudio.com/komeverse) 
 
 <img align="right" alt="Coding" src="imag/coding.gif" width="320px" />
+
 ### 🏭 [Kami Machine](https://kamimachine.com)
 Industrial machinery and automation solutions made in Vietnam.
 
