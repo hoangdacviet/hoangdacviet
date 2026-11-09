@@ -70,7 +70,7 @@ I also explore web development, automation, AI-assisted workflows, and tools tha
 
 - 🏭 [Kami Machine](https://kamimachine.com)
 - 🎮 [Kome Studio](https://komestudio.com)
-- 🌐 [KomeVerse](https://komeverse.com)
+- 🌐 [Kome Games](https://kome.top)
 
 ---
 
